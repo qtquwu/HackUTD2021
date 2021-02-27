@@ -22,6 +22,7 @@ public class Main extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+        if(event.getAuthor().isBot()) return;
         System.out.println("Received message!");
         if(event.getMessage().getContentRaw().equals("!ping")) {
             event.getChannel().sendMessage("Pong!").queue();
@@ -36,10 +37,10 @@ public class Main extends ListenerAdapter {
     }
 
     static void parse(String message, MessageReceivedEvent event){
-        message = message.substring(11);
-        if(message.matches("dd\\ddsdd[:]dd[ap[m]]"))
+        message = message.substring(12);
+        if(message.matches("[0-1][0-9]/[0-3][0-9]\s[0-5][0-9]:[0-5][0-9][ap]m"))
             event.getChannel().sendMessage("valid").queue();
-        else event.getChannel().sendMessage("invalid").queue();
+        else event.getChannel().sendMessage("invalid" + message).queue();
     }
 
 }
