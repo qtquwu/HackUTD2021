@@ -31,13 +31,15 @@ public class Main extends ListenerAdapter {
         }
         if(event.getMessage().getContentRaw().contains("addReminder")){
             String message = event.getMessage().getContentRaw();
-            parse(message);
+            parse(message, event);
         }
     }
 
-    static void parse(String message){
+    static void parse(String message, MessageReceivedEvent event){
+        message = message.substring(11);
         if(message.matches("dd\\ddsdd[:]dd[ap[m]]"))
-            System.out.println("valid");
+            event.getChannel().sendMessage("valid").queue();
+        else event.getChannel().sendMessage("invalid").queue();
     }
 
 }
