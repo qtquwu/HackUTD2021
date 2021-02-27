@@ -9,7 +9,12 @@ import javax.security.auth.login.LoginException;
 
 public class Main extends ListenerAdapter {
     public static void main(String[] args) throws LoginException {
-        String token = "ODE1MzEzNjI0NjgzOTA1MDI0.YDql-w.-on7XNlIwA6slobA1QvdDQUffi4";
+        String token;
+        if(args.length < 1) {
+            System.out.println("First argument must be token!");
+            System.exit(1);
+        }
+        token = args[0]; // args[0] should be token
         JDABuilder builder = JDABuilder.createDefault(token);
         builder.addEventListeners(new Main());
         builder.build();
