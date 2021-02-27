@@ -3,8 +3,6 @@ package utils;
 import java.time.*;
 import java.util.Scanner;
 
-import static java.time.ZoneId.*;
-
 /*
     The Assignment class is used to store information about assignments, remembering everything about them in order to determine
     When to remind students about them
@@ -15,6 +13,10 @@ public class Assignment {
     //protected LocalDate date;
     //protected LocalTime time;
     protected long instantDue;
+
+    boolean sentWeekReminder = false;
+    boolean sentDayReminder = false;
+    boolean sent4hrReminder = false;
     /*
     Constructor Arguments:
     guild: the guild (server) the assignment storage is made in
@@ -59,9 +61,15 @@ public class Assignment {
         ret = (short) ((double) timeUntilDue() / 60.0 / 60.0 / 24.0);
         return ret;
     }
+    public int hoursUntilDue() {
+        int ret;
+        ret = (int) ((double) timeUntilDue() / 60.0 / 60.0);
+        return ret;
+    }
 
     public String getSaveString() {
         // Save string should first say the class, then the arguments to create it
+        // Arguments delineated by backslashes (to allow for whitespace in assignment names)
         String saveString;
         saveString = "Assignment\\";
         saveString += guild + "\\";
@@ -71,5 +79,35 @@ public class Assignment {
         return saveString;
     }
 
+    // Just some setters
+    public void setSentWeekReminder() {
+        sentWeekReminder = true;
+    }
+    public void setSentWeekReminder(boolean sent) {
+        sentWeekReminder = sent;
+    }
+    public void setSentDayReminder() {
+        sentDayReminder = true;
+    }
+    public void setSentDayReminder(boolean sent) {
+        sentDayReminder = sent;
+    }
+    public void setSent4hrReminder() {
+        sent4hrReminder = true;
+    }
+    public void setSent4hrReminder(boolean sent) {
+        sent4hrReminder = sent;
+    }
+
+    // Determine if the bot should send a reminder based on how long until it's due and if it's already sent a reminder
+    public boolean shouldSendWeekReminder() {
+        return !sentWeekReminder && (daysUntilDue() <= 7);
+    }
+    public boolean shouldSendDayReminder() {
+        return !sentDayReminder && (daysUntilDue() <= 1);
+    }
+    public boolean shouldSend4hrReminder() {
+        return !sent4hrReminder && (hoursUntilDue() <= 4);
+    }
 
 }
