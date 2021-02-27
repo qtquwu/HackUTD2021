@@ -26,5 +26,18 @@ public class Main extends ListenerAdapter {
         if(event.getMessage().getContentRaw().equals("!ping")) {
             event.getChannel().sendMessage("Pong!").queue();
         }
+        if(event.getMessage().getContentRaw().equals("Help")){
+            event.getChannel().sendMessage("To add reminder, Type: addReminder DD/MM 00:00pm").queue();
+        }
+        if(event.getMessage().getContentRaw().contains("addReminder")){
+            String message = event.getMessage().getContentRaw();
+            parse(message);
+        }
     }
+
+    static void parse(String message){
+        if(message.matches("dd\\ddsdd[:]dd[ap[m]]"))
+            System.out.println("valid");
+    }
+
 }
