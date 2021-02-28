@@ -71,8 +71,8 @@ public class Main extends ListenerAdapter {
 
         if(event.getMessage().getContentRaw().contains("!reminder")){
             String message = event.getMessage().getContentRaw();
-            String date = (s.next() + (new Date().getYear()+1900) + "" + s.next());
-            System.out.println(date.toString());
+            String date = (s.next() + "/" + (new Date().getYear()+1900) + " " + s.next());
+            System.out.println(date);
             String remind = s.next();
             DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mma");
             try {
@@ -83,17 +83,13 @@ public class Main extends ListenerAdapter {
                 try {
                     wait(milliseconds);
                 } catch (InterruptedException e) {
-                    System.out.printf("Oops again");;
+                    System.out.printf("Oops again");
                 }
                 event.getChannel().sendMessage(remind);
             } catch (ParseException e) {
                 System.out.println("Oops");
             }
             return;
-        }
-
-        if(command.equals("!ping")) {
-            event.getChannel().sendMessage("Pong!").queue();
         }
 
         //main menu
@@ -128,9 +124,9 @@ public class Main extends ListenerAdapter {
                 for (AnnouncementKey announcementKey : announcementKeys) {
                     if (announcementKey.listeningFor(keycode)) {
                         jda.getTextChannelById(announcementKey.getChannelID()).sendMessage(
-                                "------------Announcement from " + keycode + "------------\n" +
+                                "**------------Announcement from " + keycode + "------------**\n" +
                                 message +
-                                "\n---------------------------------------------------------\n"
+                                "\n**---------------------------------------------------------**\n"
                         ).queue();
                     }
                 }
