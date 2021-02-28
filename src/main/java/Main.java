@@ -4,10 +4,15 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import utils.AnnouncementKey;
 import utils.Assignment;
+import utils.Reminder;
 
 import javax.security.auth.login.LoginException;
 import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main extends ListenerAdapter {
@@ -57,14 +62,24 @@ public class Main extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if(event.getAuthor().isBot()) return;
-        if(event.getMessage().getContentRaw().contains("addReminder")){
-            String message = event.getMessage().getContentRaw();
-            parse(message, event);
-        }
 
         Scanner s = new Scanner(event.getMessage().getContentRaw()).useDelimiter(" ");
         String command = s.next();
         if(command.charAt(0) != '!') {
+            return;
+        }
+
+        if(event.getMessage().getContentRaw().contains("!reminder")){
+            String message = event.getMessage().getContentRaw();
+            String date = (s.next() + (new Date().getYear()+1900) + "" + s.next());
+            String remind = s.next();
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mma");
+            try {
+                Date dt = sdf.parse(date);
+            } catch (ParseException e) {
+                System.out.println("Oops");
+            }
+            Reminder rem = new Reminder(event.getGuild(), event.getChannel(), );
             return;
         }
 
@@ -114,12 +129,6 @@ public class Main extends ListenerAdapter {
         }
     }
 
-    static void parse(String message, MessageReceivedEvent event){
-        message = message.substring(12);
-        if(message.matches("[0-1][0-9]/[0-3][0-9]\\s[0-5][0-9]:[0-5][0-9][ap]m"))
-            event.getChannel().sendMessage("valid").queue();
-        else event.getChannel().sendMessage("invalid" + message).queue();
-    }
 
     public void saveHeap(String filename) throws IOException {
         File file = new File(filename);
