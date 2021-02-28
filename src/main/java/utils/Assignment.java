@@ -49,6 +49,13 @@ public class Assignment implements StringSaveable {
 
     }
 
+    public String getChannelID() {
+        return channelID;
+    }
+    public String getName() {
+        return name;
+    }
+
     public long timeUntilDue() {
         long now = Instant.now().getEpochSecond();
         return instantDue - now;

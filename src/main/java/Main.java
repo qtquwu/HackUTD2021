@@ -11,6 +11,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -56,6 +57,27 @@ public class Main extends ListenerAdapter {
         } catch (Exception e) {
             System.out.println("An Exception occurred");
             e.printStackTrace();
+        }
+
+        // Main loop
+        while(true) {
+            // Only check for reminders at the start of each minute
+            if (LocalTime.now().getSecond() == 0) {
+                for (Assignment assignment : assignments) {
+                    if (assignment.shouldSend4hrReminder()) {
+                        jda.getTextChannelById(assignment.getChannelID()).sendMessage("Reminder! " + assignment.getName() + " is due in **4 hours**").queue();
+                        assignment.setSent4hrReminder();
+                    }
+                    if (assignment.shouldSendDayReminder()) {
+                        jda.getTextChannelById(assignment.getChannelID()).sendMessage("Reminder! " + assignment.getName() + " is due in *1 day*").queue();
+                        assignment.setSentDayReminder();
+                    }
+                    if (assignment.shouldSendWeekReminder()) {
+                        jda.getTextChannelById(assignment.getChannelID()).sendMessage("Reminder! " + assignment.getName() + " is due in 1 week").queue();
+                        assignment.setSentWeekReminder();
+                    }
+                }
+            }
         }
     }
 
@@ -116,6 +138,12 @@ public class Main extends ListenerAdapter {
                 System.out.println(milliseconds);
                 Assignment assignment = new Assignment(event.getChannel().getId(), name, dt.getTime());
                 assignments.add(assignment);
+                try {
+                    saveHeap("data.txt");
+                } catch (IOException e) {
+                    System.out.println("IOException thrown");
+                    e.printStackTrace();
+                }
                 //rem.sendReminder();
                 try {
                     java.util.concurrent.TimeUnit.SECONDS.sleep(milliseconds/1000);
