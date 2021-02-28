@@ -99,8 +99,10 @@ public class Main extends ListenerAdapter {
         //main menu
         if (event.getMessage().getContentRaw().equals("!menu")) {
             event.getChannel().sendMessage("Welcome to the UTD Chat Bot! \n" +
+                    "To receive reminders, use !reminder" +"\n" +
                     "To get help with assignment reminders, use !help \n" +
-                    "To receive announcements, use !announcement").queue();
+                    "To receive announcements, use !announcement" + "\n" +
+                    "Thank you for using our chat bot!").queue();
         }
 
         if(command.equals("!help")){
