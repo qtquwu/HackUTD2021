@@ -79,7 +79,7 @@ public class Main extends ListenerAdapter {
             } catch (ParseException e) {
                 System.out.println("Oops");
             }
-            Reminder rem = new Reminder(event.getGuild(), event.getChannel(), );
+            Reminder rem = new Reminder(event.getGuild().toString(), event.getChannel().toString(), remind, (long)1000);
             return;
         }
 

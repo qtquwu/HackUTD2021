@@ -6,7 +6,9 @@ public class Reminder implements Comparable<Reminder>{
     private String REMINDER;
     private long TIME;
 
-    void Reminder(String guild, String channel, String reminder, long time){
+
+
+    public Reminder(String guild, String channel, String reminder, long time){
         this.GUILD = guild;
         this.CHANNEL = channel;
         this.REMINDER = reminder;
