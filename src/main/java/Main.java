@@ -43,6 +43,14 @@ public class Main extends ListenerAdapter {
         if(command.equals("!ping")) {
             event.getChannel().sendMessage("Pong!").queue();
         }
+
+        //main menu
+        if (event.getMessage().getContentRaw().equals("!menu")) {
+            event.getChannel().sendMessage("Welcome to the UTD Chat Bot! \n " +
+                    "To get help with assignment reminders, use !help \n" +
+                    "To receive announcements, use !announcement").queue();
+        }
+
         if(command.equals("!help")){
             event.getChannel().sendMessage("To add reminder, Type: addReminder DD/MM 00:00(am/pm)").queue();
         }
