@@ -1,3 +1,4 @@
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 
 public class Main extends ListenerAdapter {
     ArrayList<AnnouncementKey> announcementKeys = new ArrayList<>();
+    static JDA jda;
 
     public static void main(String[] args) throws LoginException {
         String token;
@@ -19,7 +21,8 @@ public class Main extends ListenerAdapter {
         token = args[0]; // args[0] should be token
         JDABuilder builder = JDABuilder.createDefault(token);
         builder.addEventListeners(new Main());
-        builder.build();
+        jda = builder.build();
+        // now jda is our jda instance, which we can use to get channels
     }
 
     @Override
@@ -46,7 +49,7 @@ public class Main extends ListenerAdapter {
 
         //main menu
         if (event.getMessage().getContentRaw().equals("!menu")) {
-            event.getChannel().sendMessage("Welcome to the UTD Chat Bot! \n " +
+            event.getChannel().sendMessage("Welcome to the UTD Chat Bot! \n" +
                     "To get help with assignment reminders, use !help \n" +
                     "To receive announcements, use !announcement").queue();
         }
@@ -64,9 +67,12 @@ public class Main extends ListenerAdapter {
             }
             if (announcementRequest.equals("send")) {
                 String keycode = s.next();
+                s.useDelimiter("\\A");
+                String message = "" + s.next();
                 for (AnnouncementKey announcementKey : announcementKeys) {
                     if (announcementKey.listeningFor(keycode)) {
                         System.out.println("Found a listener!");
+                        jda.getTextChannelById(announcementKey.getChannelID()).sendMessage(message).queue();
                     }
                 }
             }

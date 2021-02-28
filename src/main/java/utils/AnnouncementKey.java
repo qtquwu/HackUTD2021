@@ -31,4 +31,7 @@ public class AnnouncementKey {
     public boolean listeningFor(String key) {
         return key.equals(keycode);
     }
+    public String getChannelID() {
+        return channelID;
+    }
 }
