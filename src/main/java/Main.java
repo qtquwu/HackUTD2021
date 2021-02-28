@@ -1,9 +1,6 @@
-import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 
@@ -38,7 +35,7 @@ public class Main extends ListenerAdapter {
 
     static void parse(String message, MessageReceivedEvent event){
         message = message.substring(12);
-        if(message.matches("[0-1][0-9]/[0-3][0-9]\s[0-5][0-9]:[0-5][0-9][ap]m"))
+        if(message.matches("[0-1][0-9]/[0-3][0-9]\\s[0-5][0-9]:[0-5][0-9][ap]m"))
             event.getChannel().sendMessage("valid").queue();
         else event.getChannel().sendMessage("invalid" + message).queue();
     }

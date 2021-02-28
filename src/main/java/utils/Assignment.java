@@ -51,7 +51,6 @@ public class Assignment {
     }
 
     public long timeUntilDue() {
-        long ret;
         long now = Instant.now().getEpochSecond();
         return instantDue - now;
     }
