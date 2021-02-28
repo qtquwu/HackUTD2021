@@ -72,14 +72,23 @@ public class Main extends ListenerAdapter {
         if(event.getMessage().getContentRaw().contains("!reminder")){
             String message = event.getMessage().getContentRaw();
             String date = (s.next() + (new Date().getYear()+1900) + "" + s.next());
+            System.out.println(date.toString());
             String remind = s.next();
             DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mma");
             try {
                 Date dt = sdf.parse(date);
+                long milliseconds = (dt.getTime()-new Date().getTime());
+                Reminder rem = new Reminder(event.getGuild().toString(), event.getChannel().toString(), remind, milliseconds);
+                //rem.sendReminder();
+                try {
+                    wait(milliseconds);
+                } catch (InterruptedException e) {
+                    System.out.printf("Oops again");;
+                }
+                event.getChannel().sendMessage(remind);
             } catch (ParseException e) {
                 System.out.println("Oops");
             }
-            Reminder rem = new Reminder(event.getGuild().toString(), event.getChannel().toString(), remind, (long)1000);
             return;
         }
 

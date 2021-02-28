@@ -23,4 +23,8 @@ public class Reminder implements Comparable<Reminder>{
         return 0;
                 //TIME.compareTo(o.getTIME());
     }
+
+    public void sendReminder() throws InterruptedException {
+        wait(TIME);
+    }
 }
