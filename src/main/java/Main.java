@@ -137,7 +137,21 @@ public class Main extends ListenerAdapter {
             event.getChannel().sendMessage("Welcome to the UTD Chat Bot! \n" +
                     "To receive reminders, type: !reminder MM/dd 00:00(AM/PM) Message" +"\n" +
                     "To receive announcements, use !announcement" + "\n" +
+                    "Need health or study resources? Use !resources for options" + "\n" +
                     "Thank you for using our chat bot!").queue();
+        }
+
+        //resources
+        if (event.getMessage().getContentRaw().equals("!resources")) {
+            event.getChannel().sendMessage("Listed below are student resources provided by UTD: \n" +
+                    "Student Counseling Center- If you are experiencing a life-threatening emergency, please call 911.\n" +
+                    "If you are in crisis and need to speak to a mental health professional, call UTD TALK (972)-883-8255." +"\n" +
+                    "Need a consultation or an appointment? Visit https://www.utdallas.edu/counseling/ to set one up" + "\n\n\n" +
+                    "Student Health Center - Need to visit a doctor? Appointments are available 8am - 5pm, Monday to Friday. See " +
+                    "https://www.utdallas.edu/healthcenter/ for setting up appointments and more health resources" + "\n\n\n" +
+                    "Student Success Center - Want individual or group tutoring to help with classes? Check out the " +
+                    "available options at https://studentsuccess.utdallas.edu/programs/" + "\n\n" +
+                    "Need other resources? Visit https://www.utdallas.edu/diversity/data-and-resources/campus-resources.html").queue();
         }
 
         if(command.equals("!announcement")) {
