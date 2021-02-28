@@ -177,9 +177,10 @@ public class Main extends ListenerAdapter {
                     "Need a consultation or an appointment? Visit https://www.utdallas.edu/counseling/ to set one up" + "\n\n\n" +
                     "Student Health Center - Need to visit a doctor? Appointments are available 8am - 5pm, Monday to Friday.\n See " +
                     "https://www.utdallas.edu/healthcenter/ for setting up appointments and more health resources" + "\n\n\n" +
-                    "Student Success Center - Want individual or group tutoring to help with classes? Check out the " +
-                    "available options at https://studentsuccess.utdallas.edu/programs/" + "\n\n" +
-                    "Need other resources? Visit https://www.utdallas.edu/diversity/data-and-resources/campus-resources.html").queue();
+                    "Student Success Center - Want individual or group tutoring to help with classes? Check out " +
+                    "https://studentsuccess.utdallas.edu/programs/ for more available options" + "\n\n" +
+                    "Need other resources? Visit https://www.utdallas.edu/diversity/data-and-resources/campus-resources.html" +
+                    "to view what else UTD has to offer!").queue();
         }
 
         if(command.equals("!announcement")) {
