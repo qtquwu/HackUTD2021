@@ -69,10 +69,11 @@ public class Main extends ListenerAdapter {
             return;
         }
 
-        if(event.getMessage().getContentRaw().contains("!reminder")){
+        if(command.equals("!reminder")){
             String message = event.getMessage().getContentRaw();
             String date = (s.next() + "/" + (new Date().getYear()+1900) + " " + s.next());
             System.out.println(date);
+            s.useDelimiter("\\A");
             String remind = s.next();
             DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mma");
             try {
@@ -87,11 +88,46 @@ public class Main extends ListenerAdapter {
                 try {
                     java.util.concurrent.TimeUnit.SECONDS.sleep(milliseconds/1000);
                 } catch (InterruptedException e) {
-                    System.out.printf("Oops again");
+                    System.out.println("Oops again");
+                    e.printStackTrace();
                 }
                 event.getChannel().sendMessage(remind).queue();
             } catch (ParseException e) {
                 System.out.println("Oops");
+                e.printStackTrace();
+            }
+            return;
+        }
+
+        //assignment command; identical to reminder but more specific use case
+        if(command.equals("!assignment")){
+            String message = event.getMessage().getContentRaw();
+            String date = (s.next() + "/" + (new Date().getYear()+1900) + " " + s.next());
+            System.out.println(date);
+            s.useDelimiter("\\A");
+            String name = s.next();
+            DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mma");
+            try {
+                Date dt = sdf.parse(date);
+                System.out.println(dt.toString());
+                Date now = new Date();
+                System.out.println(now.toString());
+                long milliseconds = (dt.getTime()-now.getTime());
+                System.out.println(milliseconds);
+                Assignment assignment = new Assignment(event.getChannel().getId(), name, dt.getTime());
+                assignments.add(assignment);
+                //rem.sendReminder();
+                try {
+                    java.util.concurrent.TimeUnit.SECONDS.sleep(milliseconds/1000);
+                } catch (InterruptedException e) {
+                    System.out.printf("Oops again");
+                    e.printStackTrace();
+                }
+                event.getChannel().sendMessage(name + " is due!").queue();
+                assignments.remove(assignment);
+            } catch (ParseException e) {
+                System.out.println("Oops");
+                e.printStackTrace();
             }
             return;
         }

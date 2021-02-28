@@ -1,11 +1,10 @@
 package utils;
 
 public class Reminder implements Comparable<Reminder>{
-    private String GUILD;
-    private String CHANNEL;
-    private String REMINDER;
-    private long TIME;
-
+    private final String GUILD;
+    private final String CHANNEL;
+    private final String REMINDER;
+    private final long TIME;
 
 
     public Reminder(String guild, String channel, String reminder, long time){

@@ -1,10 +1,10 @@
 utils/Assignment.java
  utils.Assignment
-utils/AnnouncementKey.java
- utils.AnnouncementKey
+Main.java
+ Main
 utils/StringSaveable.java
  utils.StringSaveable
 utils/Reminder.java
  utils.Reminder
-Main.java
- Main
+utils/AnnouncementKey.java
+ utils.AnnouncementKey

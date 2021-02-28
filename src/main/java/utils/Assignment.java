@@ -8,10 +8,9 @@ import java.util.Scanner;
     When to remind students about them
  */
 public class Assignment implements StringSaveable {
-    protected String guild;
+    protected String channelID;
     protected String name;
-    //protected LocalDate date;
-    //protected LocalTime time;
+
     protected long instantDue;
 
     boolean sentWeekReminder = false;
@@ -24,8 +23,8 @@ public class Assignment implements StringSaveable {
     LocalDate: the day the assignment is due
     Time: the time the assignment is due (Dallas Time)
      */
-    public Assignment(String Guild, String Name, LocalDate Date, LocalTime Time) {
-        guild = Guild; name = Name; //date = Date; time = Time; // use input to define members
+    public Assignment(String channelId, String Name, LocalDate Date, LocalTime Time) {
+        channelID = channelId; name = Name; // use input to define members
 
         // Determine the instant the assignment is due from the date
         boolean isDST = ZoneId.of("America/Dallas").getRules().isDaylightSavings(Instant.from(Date));
@@ -35,8 +34,8 @@ public class Assignment implements StringSaveable {
     This constructor uses the instant the assignment is due instead of the date/time; useful for internal workings, not
     for input from other sources
      */
-    public Assignment(String Guild, String Name, long instant) {
-        guild = Guild; name = Name; instantDue = instant;
+    public Assignment(String channelId, String Name, long instant) {
+        channelID = channelId; name = Name; instantDue = instant;
     }
     /*
     This constructor creates the class based on a save string. This is fairly simple due to the format (defined under getSaveString)
@@ -44,7 +43,7 @@ public class Assignment implements StringSaveable {
     public Assignment(String saveString) {
         Scanner s = new Scanner(saveString).useDelimiter("\\\\");
         s.next(); // The first value in the savestring just tells us that the string is an assignment. We already know this!
-        guild = s.next();
+        channelID = s.next();
         name = s.next();
         instantDue = s.nextLong();
 
@@ -71,7 +70,7 @@ public class Assignment implements StringSaveable {
         // Arguments delineated by backslashes (to allow for whitespace in assignment names)
         String saveString;
         saveString = "Assignment\\";
-        saveString += guild + "\\";
+        saveString += channelID + "\\";
         saveString += name + "\\";
         saveString += instantDue + "\\";
 
