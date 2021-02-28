@@ -74,18 +74,22 @@ public class Main extends ListenerAdapter {
             String date = (s.next() + "/" + (new Date().getYear()+1900) + " " + s.next());
             System.out.println(date);
             String remind = s.next();
-            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mma");
+            DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mma");
             try {
                 Date dt = sdf.parse(date);
-                long milliseconds = (dt.getTime()-new Date().getTime());
+                System.out.println(dt.toString());
+                Date now = new Date();
+                System.out.println(now.toString());
+                long milliseconds = (dt.getTime()-now.getTime());
+                System.out.println(milliseconds);
                 Reminder rem = new Reminder(event.getGuild().toString(), event.getChannel().toString(), remind, milliseconds);
                 //rem.sendReminder();
                 try {
-                    wait(milliseconds);
+                    java.util.concurrent.TimeUnit.SECONDS.sleep(milliseconds/1000);
                 } catch (InterruptedException e) {
                     System.out.printf("Oops again");
                 }
-                event.getChannel().sendMessage(remind);
+                event.getChannel().sendMessage(remind).queue();
             } catch (ParseException e) {
                 System.out.println("Oops");
             }
@@ -100,7 +104,7 @@ public class Main extends ListenerAdapter {
         }
 
         if(command.equals("!help")){
-            event.getChannel().sendMessage("To add reminder, Type: addReminder DD/MM 00:00(am/pm)").queue();
+            event.getChannel().sendMessage("To add reminder, Type: !reminder MM/dd 00:00(AM/PM) Message").queue();
         }
         if(command.equals("!announcement")) {
             String announcementRequest;
