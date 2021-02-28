@@ -3,13 +3,16 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import utils.AnnouncementKey;
+import utils.Assignment;
 
 import javax.security.auth.login.LoginException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main extends ListenerAdapter {
-    ArrayList<AnnouncementKey> announcementKeys = new ArrayList<>();
+    static ArrayList<AnnouncementKey> announcementKeys = new ArrayList<>();
+    static ArrayList<Assignment> assignments = new ArrayList<>();
     static JDA jda;
 
     public static void main(String[] args) throws LoginException {
@@ -23,6 +26,32 @@ public class Main extends ListenerAdapter {
         builder.addEventListeners(new Main());
         jda = builder.build();
         // now jda is our jda instance, which we can use to get channels
+
+        // now let's load data!
+        File file = new File("data.txt");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            Scanner s;
+            String type;
+            do {
+                line = reader.readLine();
+                if (line == null) break;
+                s = new Scanner(line).useDelimiter("\\\\");
+                type = s.next();
+
+                if (type.equals("Assignment")) {
+                    assignments.add(new Assignment(line));
+                } else if (type.equals("AnnouncementKey")) {
+                    announcementKeys.add(new AnnouncementKey(line));
+                }
+
+            } while (true); // This isn't a forever loop; it will always break at the end of the file
+
+        } catch (Exception e) {
+            System.out.println("An Exception occurred");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -59,7 +88,14 @@ public class Main extends ListenerAdapter {
             if (announcementRequest.equals("register")) {
                 String keycode = s.next();
                 announcementKeys.add(new AnnouncementKey(event.getChannel().getId(), keycode));
-                event.getChannel().sendMessage("Channel ID: " + event.getChannel().getId()).queue();
+                try {
+                    saveHeap("data.txt");
+                } catch (IOException e) {
+                    System.out.println("An error occurred");
+                    e.printStackTrace();
+                }
+                event.getChannel().sendMessage("You have registered for announcements from " + keycode + "."
+                                + "\n Further announcements will be sent to this channel.").queue();
             }
             if (announcementRequest.equals("send")) {
                 String keycode = s.next();
@@ -67,7 +103,11 @@ public class Main extends ListenerAdapter {
                 String message = "" + s.next();
                 for (AnnouncementKey announcementKey : announcementKeys) {
                     if (announcementKey.listeningFor(keycode)) {
-                        jda.getTextChannelById(announcementKey.getChannelID()).sendMessage(message).queue();
+                        jda.getTextChannelById(announcementKey.getChannelID()).sendMessage(
+                                "------------Announcement from " + keycode + "------------\n" +
+                                message +
+                                "\n---------------------------------------------------------\n"
+                        ).queue();
                     }
                 }
             }
@@ -79,6 +119,19 @@ public class Main extends ListenerAdapter {
         if(message.matches("[0-1][0-9]/[0-3][0-9]\\s[0-5][0-9]:[0-5][0-9][ap]m"))
             event.getChannel().sendMessage("valid").queue();
         else event.getChannel().sendMessage("invalid" + message).queue();
+    }
+
+    public void saveHeap(String filename) throws IOException {
+        File file = new File(filename);
+        file.createNewFile();
+        FileWriter fileWriter = new FileWriter(file, false);
+        for (Assignment assignment : assignments) {
+            fileWriter.write(assignment.getSaveString() + "\n"); // Hopefully it puts in newlines after each write but we'll see
+        }
+        for (AnnouncementKey announcementKey : announcementKeys) {
+            fileWriter.write(announcementKey.getSaveString() + "\n");
+        }
+        fileWriter.close();
     }
 
 }

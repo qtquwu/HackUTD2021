@@ -2,7 +2,7 @@ package utils;
 
 import java.util.Scanner;
 
-public class AnnouncementKey {
+public class AnnouncementKey implements StringSaveable {
     protected String channelID;
     protected String keycode;
 

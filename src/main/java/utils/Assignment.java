@@ -7,7 +7,7 @@ import java.util.Scanner;
     The Assignment class is used to store information about assignments, remembering everything about them in order to determine
     When to remind students about them
  */
-public class Assignment {
+public class Assignment implements StringSaveable {
     protected String guild;
     protected String name;
     //protected LocalDate date;
