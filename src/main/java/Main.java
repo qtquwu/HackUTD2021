@@ -171,11 +171,11 @@ public class Main extends ListenerAdapter {
 
         //resources
         if (event.getMessage().getContentRaw().equals("!resources")) {
-            event.getChannel().sendMessage("Listed below are student resources provided by UTD: \n" +
+            event.getChannel().sendMessage("Listed below are student resources provided by UTD: \n\n" +
                     "Student Counseling Center- If you are experiencing a life-threatening emergency, please call 911.\n" +
                     "If you are in crisis and need to speak to a mental health professional, call UTD TALK (972)-883-8255." +"\n" +
                     "Need a consultation or an appointment? Visit https://www.utdallas.edu/counseling/ to set one up" + "\n\n\n" +
-                    "Student Health Center - Need to visit a doctor? Appointments are available 8am - 5pm, Monday to Friday. See " +
+                    "Student Health Center - Need to visit a doctor? Appointments are available 8am - 5pm, Monday to Friday.\n See " +
                     "https://www.utdallas.edu/healthcenter/ for setting up appointments and more health resources" + "\n\n\n" +
                     "Student Success Center - Want individual or group tutoring to help with classes? Check out the " +
                     "available options at https://studentsuccess.utdallas.edu/programs/" + "\n\n" +
