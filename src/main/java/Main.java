@@ -28,7 +28,6 @@ public class Main extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if(event.getAuthor().isBot()) return;
-        System.out.println("Received message!");
         if(event.getMessage().getContentRaw().contains("addReminder")){
             String message = event.getMessage().getContentRaw();
             parse(message, event);
@@ -37,11 +36,8 @@ public class Main extends ListenerAdapter {
         Scanner s = new Scanner(event.getMessage().getContentRaw()).useDelimiter(" ");
         String command = s.next();
         if(command.charAt(0) != '!') {
-            System.out.println("Not a command!");
-            System.out.println(command.charAt(0));
             return;
         }
-        System.out.println("Received command " + command);
 
         if(command.equals("!ping")) {
             event.getChannel().sendMessage("Pong!").queue();
@@ -71,7 +67,6 @@ public class Main extends ListenerAdapter {
                 String message = "" + s.next();
                 for (AnnouncementKey announcementKey : announcementKeys) {
                     if (announcementKey.listeningFor(keycode)) {
-                        System.out.println("Found a listener!");
                         jda.getTextChannelById(announcementKey.getChannelID()).sendMessage(message).queue();
                     }
                 }
