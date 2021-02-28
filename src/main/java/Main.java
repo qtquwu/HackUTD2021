@@ -97,17 +97,13 @@ public class Main extends ListenerAdapter {
         }
 
         //main menu
-        if (event.getMessage().getContentRaw().equals("!menu")) {
+        if (event.getMessage().getContentRaw().equals("!help")) {
             event.getChannel().sendMessage("Welcome to the UTD Chat Bot! \n" +
-                    "To receive reminders, use !reminder" +"\n" +
-                    "To get help with assignment reminders, use !help \n" +
+                    "To receive reminders, type: !reminder MM/dd 00:00(AM/PM) Message" +"\n" +
                     "To receive announcements, use !announcement" + "\n" +
                     "Thank you for using our chat bot!").queue();
         }
 
-        if(command.equals("!help")){
-            event.getChannel().sendMessage("To add reminder, Type: !reminder MM/dd 00:00(AM/PM) Message").queue();
-        }
         if(command.equals("!announcement")) {
             String announcementRequest;
             announcementRequest = s.next();
