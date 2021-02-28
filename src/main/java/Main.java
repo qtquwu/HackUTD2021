@@ -174,12 +174,12 @@ public class Main extends ListenerAdapter {
             event.getChannel().sendMessage("Listed below are student resources provided by UTD: \n\n" +
                     "Student Counseling Center- If you are experiencing a life-threatening emergency, please call 911.\n" +
                     "If you are in crisis and need to speak to a mental health professional, call UTD TALK (972)-883-8255." +"\n" +
-                    "Need a consultation or an appointment? Visit https://www.utdallas.edu/counseling/ to set one up" + "\n\n\n" +
+                    "Need a consultation or an appointment? Visit https://www.utdallas.edu/counseling/ to set one up" + "\n\n" +
                     "Student Health Center - Need to visit a doctor? Appointments are available 8am - 5pm, Monday to Friday.\n See " +
-                    "https://www.utdallas.edu/healthcenter/ for setting up appointments and more health resources" + "\n\n\n" +
+                    "https://www.utdallas.edu/healthcenter/ for setting up appointments and more health resources" + "\n\n" +
                     "Student Success Center - Want individual or group tutoring to help with classes? Check out " +
                     "https://studentsuccess.utdallas.edu/programs/ for more available options" + "\n\n" +
-                    "Need other resources? Visit https://www.utdallas.edu/diversity/data-and-resources/campus-resources.html" +
+                    "Need other resources? Visit https://www.utdallas.edu/diversity/data-and-resources/campus-resources.html " +
                     "to view what else UTD has to offer!").queue();
         }
 
